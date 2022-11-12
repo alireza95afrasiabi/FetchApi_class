@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        main{
+            width: 100%;
+            height: 100vh;
+            background-image: url(img/food-background-images-94-images-in-co-381169-png-images-pngio-food-background-png-1440_619.png);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        }
+        #main{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        #first{
+            width: 35%;
+            height: 10%;
+            background-color: rgba(0, 0, 0, 0.337);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-top: 10px;
+            margin-left: 30px;
+        }
+        h3{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        #second{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+        .box{
+            width: 170px;
+            height: 220px;
+            background-color: rgba(0, 0, 0, 0.337);
+            border-radius: 5px;
+            margin: 10px;
+        }
+        .tp{
+            margin-top: 3px;
+            margin-left: 3px;
+        }
+        .mid{
+            width: 100%;
+            height: 52%;
+            overflow: scroll;
+            font-size: 12px;
+            padding: 2px;
+            color: white;
+        }
+        .bot{
+            width: 100%;
+            height: 10%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .bot>span{
+            margin: 3px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div id="main">
+            <section id="first">
+                <h3>
+                    comments about our food
+                </h3>
+            </section>
+            <section id="second">
+            </section>
+        </div>
+    </main>
+</body>
+    <script>
+        fetch('https://randomuser.me/api/?results=12')
+        .then((data)=>data.json())
+        .then((response)=>{
+            console.log(response.results)
+            let info = response.results
+            info.map((val)=>{
+                let _p = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta saepe delectus, veritatis expedita cupiditate sed odit quas commodi repellendus.'
+                const _main = new cmnt(val.picture.medium, _p, val.name.first, val.location.country, val.dob.age)
+
+                document.getElementById('second').appendChild(_main.complete())
+            })
+        })
+
+
+        class cmnt {
+            constructor(img, comment, name, nat, age){
+                
+                this.img = img
+                this.comment = comment
+                this.name = name 
+                this.nat = nat
+                this.age = age
+            
+            }
+
+            top(){
+                let _top = document.createElement('figure')
+                _top.classList.add('tp')
+                _top.innerHTML=`
+                    <img src="${this.img}" />
+                `
+                return _top
+            }
+            middle(){
+                let _middle = document.createElement('div')
+                _middle.classList.add('mid')
+                _middle.innerHTML=`
+                    <h4>
+                        ${this.comment}
+                    </h4>
+                `  
+                return _middle
+            }
+            bottom(){
+                let _bottom = document.createElement('div')
+                _bottom.classList.add('bot')
+                _bottom.innerHTML=`
+                    <span>${this.name}</span>
+                    <span>${this.age}</span>
+                    <span>${this.nat}</span>
+                `
+                return _bottom
+            }
+
+
+            complete(){
+                let _complete = document.createElement('div')
+                _complete.classList.add('box')
+                _complete.appendChild(this.top())
+                _complete.appendChild(this.middle())
+                _complete.appendChild(this.bottom())
+                return _complete
+            }
+        }
+    </script>
+</html>
